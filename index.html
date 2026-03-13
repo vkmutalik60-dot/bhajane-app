@@ -244,6 +244,16 @@
 
         #detail-view { padding: 16px; }
         #song-title-detail { color: var(--primary-color); font-size: 1.2rem; margin: 0 0 10px 0; text-align: center; }
+#song-dasaru-detail {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #666;
+            margin-top: -5px;
+            margin-bottom: 15px;
+            font-style: italic;
+            font-weight: bold;
+        }
+        body.dark-mode #song-dasaru-detail { color: #aaa; }
 
         .action-row {
             display: flex; justify-content: space-between; align-items: center;
@@ -264,7 +274,7 @@
             display: flex; align-items: center; gap: 5px; white-space: nowrap; transition: background-color 0.3s, color 0.3s;
         }
 
-        #song-lyrics { font-size: 1rem; white-space: pre-wrap; line-height: 1.6; transition: font-size 0.2s ease; }
+        #song-lyrics { font-size: 1rem; white-space: pre-wrap; line-height: 1.4; transition: font-size 0.2s ease; }
         #about-view { padding: 20px; line-height: 1.6; }
         #about-view h2 { color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem; border-bottom: 2px solid var(--primary-color); padding-bottom: 5px; }
         #no-results { padding: 20px; text-align: center; color: #777; display: none; }
@@ -290,10 +300,10 @@
         <div id="dasaru-view">
             <ul id="all-songs-list" class="interactive-list"></ul>
             
-            <div class="section-title">ದೇವರು (Deities)</div>
+            <div class="section-title">ಸ್ತೋತ್ರಗಳು (stotra's)</div>
             <ul id="god-list" class="category-grid"></ul>
             
-            <div class="section-title">ದಾಸರು (Authors)</div>
+            <div class="section-title">ದಾಸರುಗಳು (Dasaru's)</div>
             <ul id="dasaru-list-col" class="category-grid"></ul>
         </div>
 
@@ -310,6 +320,7 @@
 
         <div id="detail-view">
             <h2 id="song-title-detail"></h2>
+	    <div id="song-dasaru-detail"></div>
             <div class="action-row">
                 <div class="font-controls">
                     <button id="font-decrease" class="font-btn">A-</button>
@@ -361,6 +372,7 @@
         const fontDecreaseBtn = document.getElementById('font-decrease');
         
         const songTitleDetail = document.getElementById('song-title-detail');
+	const songDasaruDetail = document.getElementById('song-dasaru-detail'); //
         const songLyricsEl = document.getElementById('song-lyrics');
         const appTitle = document.getElementById('app-title');
         const searchInput = document.getElementById('search-input');
@@ -567,6 +579,13 @@
                 window.history.pushState({}, '', newUrl);
 
                 songTitleDetail.textContent = song.title;
+		// Build the subtitle with subGod and Dasaru!
+                let subTitle = "";
+                if (song.god) subTitle += ` ${song.subGod}  `;
+                if (song.god && song.dasaru) subTitle += `-  `;
+                if (song.dasaru) subTitle += `ರಚನೆ : ${song.dasaru}`;
+                
+                songDasaruDetail.textContent = subTitle;
                 songLyricsEl.innerHTML = song.lyrics; 
                 
                 if (favoriteSongs.includes(id)) {

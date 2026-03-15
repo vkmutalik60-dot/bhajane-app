@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dasa-app-cache-v6'; // Bumped to v6!
+const CACHE_NAME = 'dasa-app-cache-v7'; // The Bulletproof Version
 
 const urlsToCache = [
   '/',
@@ -8,15 +8,21 @@ const urlsToCache = [
   '/manifest.json'
 ];
 
+// 1. Install and save files ONE BY ONE so missing files don't crash it
 self.addEventListener('install', event => {
   self.skipWaiting(); 
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(urlsToCache);
+      console.log('Opened cache v7');
+      // This smart loop prevents the whole app from breaking!
+      urlsToCache.forEach(url => {
+        cache.add(url).catch(err => console.log('Could not cache: ', url));
+      });
     })
   );
 });
 
+// 2. Wipe out all old, broken memory files immediately
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
@@ -33,6 +39,7 @@ self.addEventListener('activate', event => {
   self.clients.claim(); 
 });
 
+// 3. Smart Fetching
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   if (!event.request.url.startsWith('http')) return;

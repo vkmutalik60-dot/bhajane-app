@@ -726,6 +726,43 @@
             }
         });
     </script>
+	// --- INSTALL APP BUTTON LOGIC ---
+        let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
+
+        // 1. Wait for the browser to say the app is ready to install
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the default browser pop-up
+            e.preventDefault();
+            // Save the event so we can trigger it later
+            deferredPrompt = e;
+            // Un-hide our custom install button!
+            installBtn.style.display = 'block';
+        });
+
+        // 2. What happens when the user clicks our button
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                // Show the official install prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('User installed the app');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                // Hide the button after they make a choice and clear the prompt
+                installBtn.style.display = 'none';
+                deferredPrompt = null;
+            }
+        });
+
+        // 3. If they successfully install it, hide the button forever
+        window.addEventListener('appinstalled', () => {
+            installBtn.style.display = 'none';
+            console.log('App completely installed');
+        });
 <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

@@ -157,7 +157,7 @@
         .category-grid {
             display: grid; 
             /* MAGIC TRICK: Auto-fits 2 columns on small screens, expands to 3 on wider screens! */
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+            grid-template-columns: 1fr;; 
             gap: 10px; 
             padding: 12px 16px; 
             list-style: none; 
@@ -168,10 +168,10 @@
             background-color: var(--btn-bg);
             border: 1px solid var(--btn-border);
             border-radius: 8px; 
-            padding: 10px 12px; 
+            padding: 15px 20px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 1.1rem; /* Makes the font a bit bigger too! */
             color: var(--text-color);
             transition: all 0.2s;
             display: flex;
@@ -199,9 +199,9 @@
         /* SMART RESPONSIVE GRID FOR SONGS */
         .song-grid {
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+            grid-template-columns: 1fr;
             gap: 10px; 
-            padding: 12px 16px; 
+             padding: 15px 20px;
             list-style: none; 
             background-color: var(--app-bg);
         }
@@ -211,7 +211,7 @@
             border: 1px solid var(--btn-border);
             border-radius: 8px; 
             padding: 10px; 
-            text-align: center; 
+            text-align: left; 
             cursor: pointer;
             font-weight: bold; 
             font-size: 0.85rem; 

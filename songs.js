@@ -398,7 +398,7 @@ const dasaSongs = [
     },
     {
     id: 41,
-        title: "ಮಂಗಳ ಶ್ಲೋಕಗಳು",
+        title: "",
         dasaru: "",
         god : "ಮಂಗಳ ಶ್ಲೋಕಗಳು",
         subGod : "",
